@@ -1,0 +1,21 @@
+﻿@page "/example"
+@using DataAccessLibrary.Models
+@inject IBeaconDataAccess beaconData
+
+@code {
+    List<BeaconModel> BeaconDataList;
+    protected override async Task OnInitializedAsync()
+    {
+        string beaconName = "1234-5678-1234";
+        BeaconDataList = await beaconData.GetBeaconDataAsync(beaconName);
+
+        BeaconModel beacon = new BeaconModel();
+        beacon.BeaconName = "TEST";
+        beacon.Distance = 10;
+        beacon.LastDT = DateTime.Now;
+        beacon.Rssi = -70;
+    // example of calling procedure to save data
+        beaconData.AddReader(beacon);
+    }
+
+}
